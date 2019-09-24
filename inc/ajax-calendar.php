@@ -11,11 +11,14 @@ Author URI: http://urbangiraffe.com
 class AJAX_Calendar_Widget extends WP_Widget {
 	var $category_ids = array();
 
-	function AJAX_Calendar_Widget() {
+	function __construct() {		
 		$widget_ops  = array( 'classname' => 'ajax_calendar_widget', 'description' => __( 'AJAX Powered Calendar', 'ajax-calendar' ) );
 		$control_ops = array( 'width' => 300, 'height' => 300 );
-
-		$this->WP_Widget( 'ajax-calendar', __( 'AJAX Calendar', 'ajax-calendar' ), $widget_ops, $control_ops );
+ 		// by mohjak
+ 		$this->id_base = 'ajax-calendar';
+ 		$this->name = __( 'AJAX Calendar', 'ajax-calendar' );
+ 		$this->widget_options = $widget_ops;
+ 		$this->control_options = $control_ops;
 
 		add_action( 'template_redirect', array( &$this, 'template_redirect' ) );
 	}
@@ -82,7 +85,7 @@ this.r.send(this.pb);}}
 		remove_filter( 'query', array( &$this, 'modify_calendar_query' ) );
 
 		$text = str_replace('<caption>', '<caption><a href="' . get_month_link($year, $monthnum) . '">', $text);
-		$text = str_replace('</caption>', '</a></caption>', $text);		
+		$text = str_replace('</caption>', '</a></caption>', $text);
 		$text = str_replace( '<td colspan="3" id="next"><a', '<td colspan="3" id="next"><a onclick="microAjax(this.href + \'?ajax=true\',show_micro_ajax); return false"', $text );
 		$text = str_replace( '<td colspan="3" id="prev"><a', '<td colspan="3" id="prev"><a onclick="microAjax(this.href + \'?ajax=true\',show_micro_ajax); return false"', $text );
 		$text .= '</div>';

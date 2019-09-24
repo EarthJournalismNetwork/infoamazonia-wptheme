@@ -1,10 +1,27 @@
 <?php
-class CategoryFeedsWidget extends WP_Widget {
-
-	function CategoryFeedsWidget() {
-		$widget_ops = array('classname' => 'widget_category_feeds', 'description' => __('RSS Feeds by selected categories', 'infoamazonia') );
-		$this->WP_Widget('CategoryFeedsWidget', __('Category Feed Links', 'infoamazonia'), $widget_ops);
-	}
+ // by mohjak
+class Actual_Widget extends WP_Widget {
+     // WordPress WP_Widget Class
+     public function __construct($id_base, $name, $widget_options = array(), $control_options = array()) {
+ 
+         parent::__construct(
+ 			// extend WP_Widget as per codex
+ 			$id_base, $name, $widget_options, $control_options
+         );
+     }
+}
+ class CategoryFeedsWidget extends Actual_Widget {
+ 
+ 	public function __construct($id_base, $name, $widget_options = array(), $control_options = array()) {
+ 		// by mohjak
+ 		$this->id_base = $id_base;
+ 		$this->name = $name;
+ 		$this->widget_options = $widget_options;
+ 		$this->control_options = $control_options;
+ 
+ 		parent::__construct($this->id_base, $this->name, $this->widget_options, $this->control_options);
+    }
+}
 
 	function form($instance) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => __('RSS Feeds', 'infoamazonia'), 'categories' => '' ) );
@@ -46,7 +63,17 @@ class CategoryFeedsWidget extends WP_Widget {
 
 		echo $after_widget;
 	}
-
-}
-add_action( 'widgets_init', create_function('', 'return register_widget("CategoryFeedsWidget");') );
+// by mohjak
+ function register_widget_category_feeds_widget() {
+ 	$widget_ops = array('classname' => 'widget_category_feeds', 'description' => __('RSS Feeds by selected categories', 'infoamazonia') );
+ 
+ 	$id_base = 'CategoryFeedsWidget';
+ 	$name = __('Category Feed Links', 'infoamazonia');
+ 	$widget_options = $widget_ops;
+ 	$control_options = array();
+ 
+ 	$widget = new CategoryFeedsWidget($id_base, $name, $widget_options, $control_options);
+ 	return register_widget($widget);
+ }
+ add_action( 'widgets_init', 'register_widget_category_feeds_widget' );
 ?>
