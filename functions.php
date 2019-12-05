@@ -114,7 +114,7 @@ function infoamazonia_scripts() {
 	wp_register_script('html5', get_stylesheet_directory_uri() . '/js/html5shiv.js', array(), '3.6.2');
 	wp_register_script('submit-story', get_stylesheet_directory_uri() . '/js/submit-story.js', array('jquery'), '0.1.1');
 
-	wp_register_script('twttr', 'http://platform.twitter.com/widgets.js');
+	wp_register_script('twttr', 'https://platform.twitter.com/widgets.js');
 
 	$lang = '';
 	if(function_exists('qtranxf_getLanguage')) {
@@ -129,7 +129,7 @@ function infoamazonia_scripts() {
 		'ajaxurl' => admin_url('admin-ajax.php'),
 		'query' => $jeo_markers->query(),
 		'stories_label' => __('stories', 'infoamazonia'),
-		'home' => (is_home() && !is_paged() && !$_REQUEST['infoamazonia_filter_']),
+		'home' => (is_home() && !is_paged() && isset($_REQUEST['infoamazonia_filter_']) && !$_REQUEST['infoamazonia_filter_']),
 		'copy_embed_label' => __('Copy the embed code', 'infoamazonia'),
 		'share_label' => __('Share', 'infoamazonia'),
 		'print_label' => __('Print', 'infoamazonia'),
@@ -175,7 +175,7 @@ function infoamazonia_scripts() {
 	// styles
 	wp_enqueue_style('site');
 	//wp_enqueue_style('reset');
-	wp_enqueue_style('webfont-lato', 'http://fonts.googleapis.com/css?family=Lato:900');
+	wp_enqueue_style('webfont-lato', 'https://fonts.googleapis.com/css?family=Lato:900');
 	wp_enqueue_style('main');
 	wp_enqueue_style('shadowbox');
 
@@ -468,11 +468,11 @@ function infoamazonia_share_meta() {
 
 	<meta property="og:title" content="<?php the_title(); ?>" />
 	<meta property="og:description" content="<?php the_excerpt(); ?>" />
-	<meta property="og:image" content="<?php echo $image; ?>" />
+    <meta property="og:image" content="<?php /* by mohjak 2019-10-11 */ echo isset($image) ? $image : ''; ?>" />
 
 	<?php
-
-	if($query['story'])
+    // by mohjak 2019-10-10
+	if(isset($query) && $query['story'])
 		wp_reset_postdata();
 
 }
@@ -638,3 +638,28 @@ function infoamazonia_get_current_page() {
 	}
 }
 add_action('jeo_init', 'infoamazonia_get_current_page');
+
+/*
+ * Limpeza KSES para ACF - https://github.com/Hube2/acf-filters-and-functions/blob/master/acf-form-kses.php
+ */
+
+function acf_wp_kses_post($data, $post_id=0, $field=array()) {
+		if (isset($field['type']) &&
+		    ($field['type'] == 'repeater' || $field['type'] == 'flexible_content' || $field['type'] == 'clone' || $field['type'] == 'group')) {
+			// no need to run it on repeaters
+			// will be called agaian for each subfield
+			return $value;
+		}
+		if (!is_array($data)) {
+			return wp_kses_post($data);
+		}
+		$return = array();
+		if (count($data)) {
+			foreach ($data as $index => $value) {
+				$return[$index] = acf_wp_kses_post($value);
+			}
+		}
+		return $return;
+	}
+	add_filter('acf/update_value', 'acf_wp_kses_post', 10, 3);
+

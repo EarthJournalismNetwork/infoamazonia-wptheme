@@ -24,7 +24,9 @@
 								<span class="lsf">clip</span>
 								<span class="publisher-content">
 									<?php
-									echo array_shift(get_the_terms($post->ID, 'publisher'))->name;
+                                    $terms_arr = get_the_terms($post->ID, 'publisher');
+                                    $first_term = array_shift($terms_arr);
+									echo $first_term->name;
 									?>
 								</span>
 							</span>

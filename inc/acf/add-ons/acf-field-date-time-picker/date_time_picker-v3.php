@@ -26,9 +26,10 @@ class acf_field_date_time_picker extends acf_Field {
 		// set name / title
 		$this->name = 'date_time_picker';
 		$this->title = __( 'Date and Time Picker' );
-		$this->domain = 'acf-date_time_picker';
+        $this->domain = 'acf-date_time_picker';
+        // by mohjak 2019-11-24 Fix Fatal error:  Cannot use empty array elements in arrays
 		$this->defaults = array(
-			, 'label'              => __( 'Choose Time', $this->domain )
+			'label'              => __( 'Choose Time', $this->domain )
 			, 'time_format'        => 'hh:mm'
 			, 'show_date'          => 'true'
 			, 'date_format'        => 'yy-mm-dd'
