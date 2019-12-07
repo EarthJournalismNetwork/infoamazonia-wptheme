@@ -92,14 +92,14 @@ class infoamazonia_AdvancedNav {
 		wp_enqueue_script('moment-js');
 		wp_enqueue_style('chosen', get_stylesheet_directory_uri() . '/css/chosen.css');
 		wp_enqueue_script('jquery-ui-datepicker');
-		wp_enqueue_style('jquery-ui-smoothness', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
+		wp_enqueue_style('jquery-ui-smoothness', 'https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
 
 	}
 
 	function form() {
 
 		?>
-		<form class="advanced-nav-filters row <?php if($_GET[$this->prefix]) echo 'active'; ?>">
+		<form class="advanced-nav-filters row <?php if(isset($_GET[$this->prefix]) && $_GET[$this->prefix]) echo 'active'; ?>">
 			<input type="hidden" name="<?php echo $this->prefix; ?>" value="1" />
 			<div class="three columns alpha">
 				<div class="search-input adv-nav-input">
@@ -123,9 +123,13 @@ class infoamazonia_AdvancedNav {
 					</div>
 				</div>
 			<?php endif; ?>
-			<?php
-			$oldest = array_shift(get_posts(array('posts_per_page' => 1, 'order' => 'ASC', 'orderby' => 'date')));
-			$newest = array_shift(get_posts(array('posts_per_page' => 1, 'order' => 'DESC', 'orderby' => 'date')));
+            <?php
+            // by mohjak 2019-11-25 Fix Only variables should be passed by reference
+            $oldest_asc = get_posts(array('posts_per_page' => 1, 'order' => 'ASC', 'orderby' => 'date'));
+            $newest_desc = get_posts(array('posts_per_page' => 1, 'order' => 'DESC', 'orderby' => 'date'));
+
+			$oldest = array_shift($oldest_asc);
+			$newest = array_shift($newest_desc);
 
 			$before = $oldest->post_date;
 			$after = $newest->post_date;

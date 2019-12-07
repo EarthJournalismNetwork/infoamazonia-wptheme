@@ -54,7 +54,7 @@ if(isset($_GET['lat']) && isset($_GET['lon'])) {
 }
 //$json_conf = json_encode($conf);
 
-if($_GET['p']) {
+if(isset($_GET['p']) && $_GET['p']) {
 	$embed_title = get_the_title($_GET['p']);
 }
 

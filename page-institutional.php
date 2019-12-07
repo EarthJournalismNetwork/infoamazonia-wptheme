@@ -9,7 +9,8 @@
 <?php
 // Slider
 $slider_query = new WP_Query(array('post_type' => 'slider', 'posts_per_page' => 4));
-if($slider_query->have_posts()) :
+// by mohjak: 2019-11-21 excel line 18 issue#120
+if(isset($slider_query) && $slider_query && $slider_query->have_posts()) :
 	$first_img = wp_get_attachment_image_src(get_post_thumbnail_id($slider_query->post->ID), 'full');
 	?>
 	<section id="slider">

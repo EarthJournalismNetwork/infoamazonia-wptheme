@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * JEO Post Zoom
  */
 
@@ -14,13 +14,16 @@ class JEO_Post_Zoom {
 	}
 
 	function zoom_input($post) {
-		$geocode_zoom = get_post_meta($post->ID, 'geocode_zoom', true);
-		?>
-		<p>
-		<?php _e('Zoom', 'infoamazonia'); ?>:
-		<input type="text" id="geocode_zoom" name="geocode_zoom" value="<?php if($geocode_zoom) echo $geocode_zoom; ?>" />
-		</p>
-		<?php
+        // by mohjak 2019-10-11
+        if ($post) {
+            $geocode_zoom = get_post_meta($post->ID, 'geocode_zoom', true);
+            ?>
+            <p>
+            <?php _e('Zoom', 'infoamazonia'); ?>:
+            <input type="text" id="geocode_zoom" name="geocode_zoom" value="<?php if($geocode_zoom) echo $geocode_zoom; ?>" />
+            </p>
+            <?php
+        }
 	}
 
 	function save_post($post_id) {
