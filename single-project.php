@@ -10,7 +10,9 @@
 							<h1><?php the_title(); ?></h1>
 						</header>
 						<aside class="social clearfix">
-							<div class="fb-like" data-href="<?php the_permalink(); ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div>
+							<!-- <div class="fb-like" data-href="<?php /*the_permalink();*/ ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div> -->
+							<?php // by mohjak fix issue#7 https://tech.openinfo.cc/earth/infoamazonia/-/issues/7 ?>
+							<div class="fb-share-button" data-href="<?php the_permalink(); ?>" data-layout="button"></div>
 							<div class="twitter-button">
 								<a href="https://twitter.com/share" class="twitter-share-button" data-via="infoamazonia" <?php if(function_exists('qtranxf_getLanguage')) : ?>data-lang="<?php echo qtranxf_getLanguage(); ?>"<?php endif; ?>>Tweet</a>
 							</div>

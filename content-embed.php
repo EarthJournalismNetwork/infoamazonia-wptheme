@@ -1,3 +1,8 @@
+<?php
+// by mohjak 2020-07-29 issue#11 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/11#note_8541
+// opcache_reset();
+wp_cache_flush();
+?>
 <html id="embedded" <?php language_attributes(); ?>>
 <head>
 <meta charset="<?php bloginfo('charset'); ?>" />
@@ -81,6 +86,14 @@ $json_conf = jeo_get_map_embed_conf();
 				map.on('zoomend', track);
 				map.on('dragend', track);
 
+			});
+
+			jeo.markerClicked(function(e) {
+				// by mohjak 2020-07-29 issue#11 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/11#note_8541
+				var postUrl = e.target.feature.properties.permalink;
+				$('.map-sidebar').find('.button.read-button').attr('href', postUrl);
+
+				return false;
 			});
 
 		})(jQuery);
