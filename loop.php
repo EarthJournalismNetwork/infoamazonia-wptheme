@@ -1,3 +1,7 @@
+<?php
+// by mohjkak 2020-07-29 issue#6: cache issue https://tech.openinfo.cc/earth/infoamazonia/-/issues/6#note_8539
+wp_cache_flush();
+?>
 <ul class="list-posts row">
 	<?php while(have_posts()) : the_post(); ?>
 		<li id="post-<?php the_ID(); ?>" <?php post_class('post-item four columns'); ?>>
@@ -74,6 +78,7 @@
 				});
 
 			});
+
 		});
 
 		jeo.mapReady(function(map) {
@@ -83,11 +88,34 @@
 					scrollTop: $('#stage').offset().top
 				}, 400);
 				map.markers.openMarker(markerID, false);
+
+				// by mohjak 2020-07-28 issue#6 Read more issue https://tech.openinfo.cc/earth/infoamazonia/-/issues/6
+				var postUrl = $(this).find('.post-header').find('a:first').attr('href');
+				$('.map-sidebar').find('.button.read-button').attr('href', postUrl);
+
+				// by mohjak 2020-07-30 isue#2 load 4 stories in sidebar https://tech.openinfo.cc/earth/openearth/-/issues/147
+				map.$.sidebar.addClass('active');
+
 				return false;
 			});
+
 			$('.list-posts li .button').click(function() {
 				window.location = $(this).attr('href');
 			});
+
+			jeo.markerClicked(function(e) {
+				// by mohjak 2020-07-29 issue#6 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/6#note_8540
+				// by mohjak 2020-07-29 issue#11 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/11#note_8541
+				var postUrl = e.target.feature.properties.permalink;
+				$('.map-sidebar').find('.button.read-button').attr('href', postUrl);
+
+				// by mohjak 2020-07-30 isue#2 load 4 stories in sidebar https://tech.openinfo.cc/earth/openearth/-/issues/147
+				map.$.sidebar.addClass('active');
+
+				return false;
+			});
+
 		});
+
 	})(jQuery);
 </script>

@@ -5,7 +5,9 @@
 		<div class="twelve columns">
 			<ul class="share">
 				<li class="facebook">
-					<div class="fb-like" data-href="<?php the_permalink(); ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana" data-action="recommend"></div>
+					<!-- <div class="fb-like" data-href="<?php /*the_permalink();*/ ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="verdana"></div> -->
+					<?php // by mohjak fix issue#7 https://tech.openinfo.cc/earth/infoamazonia/-/issues/7 ?>
+					<div class="fb-share-button" data-href="<?php the_permalink(); ?>" data-layout="button"></div>
 				</li>
 				<li class="twitter">
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="infoamazonia" data-lang="<?php if(function_exists('qtranxf_getLanguage')) echo qtranxf_getLanguage(); ?>">Tweet</a>

@@ -322,7 +322,8 @@
 			if(map.$.sidebar && map.$.sidebar.length) {
 
 				var permalink_slug = marker.properties.permalink.replace(infoamazonia_markers.site_url, '');
-				marker.properties.permalink = infoamazonia_markers.site_url + infoamazonia_markers.language + '/' + permalink_slug;
+				// by mohjak 2020-07-29 issue#6 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/6#note_8540
+				marker.properties.permalink = infoamazonia_markers.site_url /*+ infoamazonia_markers.language + '/' */ + permalink_slug;
 
 				if(!map.$.sidebar.story) {
 					map.$.sidebar.append('<div class="story" />');
@@ -533,8 +534,11 @@
 				}
 			}
 
+			// by mohjak 2020-07-30 isue#2 load 4 stories in sidebar https://tech.openinfo.cc/earth/openearth/-/issues/147
+			/*
 			if(map.$.sidebar)
 				map.$.sidebar.addClass('active');
+			*/
 
 			jeo.runCallbacks('markerOpened', [map]);
 

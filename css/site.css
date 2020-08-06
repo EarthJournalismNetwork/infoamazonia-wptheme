@@ -132,6 +132,15 @@ select {
   display: none;
   }
 
+/* by mohjak: reolved issue#9 https://tech.openinfo.cc/earth/infoamazonia/-/issues/9 Legends in maps aren't showing up in Spanish */
+
+body.en .lang-en,
+body.pt .lang-pt,
+body.pt-BR .lang-pt,
+body.es .lang-es {
+	display:block;
+}
+
 /*  -------------------------------------------------------
  *    Frontpage
  *  ------------------------------------------------------- */
@@ -455,7 +464,7 @@ select {
 /*  -------------------------------------------------------
  *  Map component styling
  *  ------------------------------------------------------- */
-	
+
 #legend {
   position: absolute;
   z-index: 10000;
