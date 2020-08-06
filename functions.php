@@ -143,7 +143,8 @@ function infoamazonia_scripts() {
 			'markerId' => 'none'
 		),
 		'language' => $lang,
-		'site_url' => home_url('/'),
+		// by mohjak 2020-07-29 issue#6 marker clicked change read more link https://tech.openinfo.cc/earth/infoamazonia/-/issues/6#note_8540
+		'site_url' => site_url(),
 		'read_more_label' => __('Read more', 'infoamazonia'),
 		'lightbox_label' => array(
 			'slideshow' => __('Open slideshow', 'infoamazonia'),
@@ -162,7 +163,8 @@ function infoamazonia_scripts() {
 		wp_enqueue_script('infoamazonia-sticky', get_stylesheet_directory_uri() . '/js/sticky-posts.js', array('jeo.markers', 'jquery'), '0.1.2');
 
 	// styles
-	wp_register_style('site', get_stylesheet_directory_uri() . '/css/site.css', array(), '1.1'); // old styles
+	/* by mohjak: reolved issue#9 https://tech.openinfo.cc/earth/infoamazonia/-/issues/9 Legends in maps aren't showing up in Spanish */
+	wp_register_style('site', get_stylesheet_directory_uri() . '/css/site.css', array(), '1.2'); // old styles
 	wp_register_style('reset', get_stylesheet_directory_uri() . '/css/reset.css', array(), '2.0');
 	wp_register_style('main', get_stylesheet_directory_uri() . '/css/main.css', array('jeo-skeleton', 'jeo-base', 'jeo-lsf'), '3.0');
 
@@ -455,7 +457,8 @@ function infoamazonia_share_meta() {
 			$zoom = $query['zoom'];
 		}
 
-		$image = jeo_get_mapbox_image($map_id, 435, 375, $lat, $lng, $zoom);
+		if(function_exists('jeo_get_mapbox_image'))
+			$image = jeo_get_mapbox_image($map_id, 435, 375, $lat, $lng, $zoom);
 
 	}
 

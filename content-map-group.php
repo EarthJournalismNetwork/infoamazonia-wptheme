@@ -50,7 +50,8 @@ if(is_array($mapgroup['maps'])) {
 				<div class="viewing-post">
 				</div>
 				<?php
-				if(is_home() && !is_paged() && isset($_REQUEST['infoamazonia_filter_']) && !$_REQUEST['infoamazonia_filter_'])
+				// by mohjak 2020-07-30 isue#2 load 4 stories in sidebar https://tech.openinfo.cc/earth/openearth/-/issues/147
+			  	// if(is_home() && !is_paged() && isset($_REQUEST['infoamazonia_filter_']) && !$_REQUEST['infoamazonia_filter_'])
 					get_template_part('section', 'sticky-posts');
 				?>
 			</div>
