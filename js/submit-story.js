@@ -8,12 +8,12 @@
 
 		bindActions();
 
-		$('.submit-story').live('click', function() {
+		$('.submit-story').on('click', function() {
 			openForm();
 			return false;
 		});
 
-		$('.close-submit-story').live('click', function() {
+		$('.close-submit-story').on('click', function() {
 			closeForm();
 			return false;
 		});
